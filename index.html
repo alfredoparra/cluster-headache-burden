@@ -49,10 +49,10 @@
                   color:var(--mut); margin:22px 0 10px; padding-bottom:6px;
                   border-bottom:1px solid var(--line); }
   main h2.sec-h:first-child { margin-top:0; }
-  #cfPanel input[type=range], #ciPanel input[type=range] { accent-color:var(--accv); }
-  #cfPanel input[type=number], #ciPanel input[type=number] { background:var(--bg); color:var(--ink);
+  #cfPanel input[type=range] { accent-color:var(--accv); }
+  #cfPanel input[type=number] { background:var(--bg); color:var(--ink);
           border:1px solid var(--line); border-radius:6px; padding:5px 7px; font:inherit; }
-  #cfPanel input[type=number]:focus, #ciPanel input[type=number]:focus { outline:none; border-color:var(--accv); }
+  #cfPanel input[type=number]:focus { outline:none; border-color:var(--accv); }
   .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
            gap:10px; margin-bottom:14px; }
   .card { background:var(--panel); border:1px solid var(--line);
@@ -75,9 +75,10 @@
   button { background:var(--accv); color:#fff; border:0; border-radius:6px;
            padding:7px 12px; cursor:pointer; font-size:12px; line-height:1.2; }
   button.sec { background:#2a2f3a; }
-  select { background:var(--bg); color:var(--ink); border:1px solid var(--line);
-           border-radius:6px; padding:7px 8px; font:inherit; font-size:12px;
-           line-height:1.2; cursor:pointer; }
+  select { background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%239aa3b2' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+           color:var(--ink); border:1px solid var(--line);
+           border-radius:6px; padding:7px 28px 7px 8px; font:inherit; font-size:12px;
+           line-height:1.2; cursor:pointer; -webkit-appearance:none; appearance:none; }
   select:focus { outline:none; border-color:var(--accv); }
   .actions { display:flex; flex-direction:column; gap:8px; margin-top:16px; }
   .actions button { width:100%; }
@@ -91,7 +92,11 @@
 <header>
   <h1>Cluster Headache: Burden and Cost-Effectiveness Model
     <span id="status" class="status">Loading…</span></h1>
-  <p>A Monte Carlo model of the global burden of cluster headache, used to estimate the cost-effectiveness of ClusterFree.</p>
+  <p>A Monte Carlo model of the global burden of cluster headache, with an illustration of how the cost-effectiveness of ClusterFree could be estimated from it.</p>
+  <nav aria-label="Model pages" style="display:flex;gap:22px;margin-top:8px">
+    <a href="/model" aria-current="page" style="color:var(--ink);text-decoration:none;font-size:13px;padding:6px 0 8px;border-bottom:2px solid var(--acco)">Burden &amp; cost-effectiveness</a>
+    <a href="/model/patients-helped" style="color:var(--mut);text-decoration:none;font-size:13px;padding:6px 0 8px;border-bottom:2px solid transparent">Patients Helped (ClusterInfo)</a>
+  </nav>
 </header>
 <div class="wrap">
   <button id="sidebarToggle" class="edge-toggle" aria-label="Show or hide the levers panel"
@@ -124,24 +129,25 @@
       <div id="c_tornado"></div>
     </div>
 
-    <h2 class="sec-h">Cost-effectiveness of ClusterFree
-      <span class="info" data-tip="The organization's TOTAL cost-effectiveness across all our initiatives combined (ClusterInfo, the open letters, and everything else). Enter the whole annual budget, the total counterfactual patients helped across all projects, and the effect size. For a single project's bottom-up estimate, see the ClusterInfo section below.">ⓘ</span>
+    <h2 class="sec-h">Cost-effectiveness of ClusterFree <span style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--acco);border:1px solid var(--acco);border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:middle">Illustrative</span>
+      <span class="info" data-tip="This section shows how the organization's total cost-effectiveness across all initiatives (ClusterInfo, the open letters, and everything else) could be estimated: enter the whole annual budget, the total counterfactual patients helped across all projects, and the effect size. The defaults are placeholders.">ⓘ</span>
       <span id="ceStatus" style="font-size:11px;font-weight:400;color:var(--mut);margin-left:6px"></span></h2>
     <div class="chart full" id="cfPanel" style="min-height:0;padding:12px 14px">
+      <div style="font-size:12px;color:var(--mut);margin-bottom:12px;max-width:820px;line-height:1.55">This section is an illustration rather than an estimate. It shows how one could work out our cost-effectiveness given detailed data on how many patients we help and by how much, which we're still gathering. It also doesn't account for multi-year benefits. The inputs below are placeholders, so change them to see how the results respond. For a model built on real data, see <a href="/model/patients-helped" style="color:var(--acco)">Patients Helped (ClusterInfo)</a>.</div>
       <div style="display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;font-size:12px">
         <div style="display:flex;flex-direction:column;gap:6px">
           <span>Annual ClusterFree budget ($) <span class="info" data-tip="Total annual budget of the organization across all initiatives.">ⓘ</span></span>
-          <input id="ce_budget" type="text" inputmode="numeric" value="100,000" style="width:130px">
+          <input id="ce_budget" type="text" inputmode="numeric" value="150,000" style="width:130px">
         </div>
         <div style="display:flex;flex-direction:column;gap:6px">
-          <span>Patients helped / yr <span class="info" data-tip="Total counterfactual patients helped per year across ALL initiatives: currently-untreated patients who got treated because of us and would not have otherwise.">ⓘ</span></span>
-          <input id="ce_reached" type="text" inputmode="numeric" value="500" style="width:120px">
+          <span>Patients helped / yr (placeholder) <span class="info" data-tip="Total counterfactual patients helped per year across ALL initiatives: currently-untreated patients who got treated because of us and would not have otherwise.">ⓘ</span></span>
+          <input id="ce_reached" type="text" inputmode="numeric" value="2,000" style="width:120px">
         </div>
         <div style="display:flex;flex-direction:column;gap:6px">
           <span>Effect size <span class="info" data-tip="Of the full benefit of going from no treatment to both an acute (attack-stopping) and a preventive (frequency-lowering) treatment, the average share a beneficiary actually realizes. Effect size = 1 means they capture that full modeled benefit; it does NOT mean pain-free, since even then some attacks aren't caught (failed aborts, non-responders, only-partial frequency cuts). Modelled as a truncated normal (median + std dev) on [0,1].">ⓘ</span></span>
           <span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
             <label style="display:flex;flex-direction:column;gap:3px;color:var(--mut);align-items:flex-start">
-              <input id="ce_eff_mean" type="number" value="0.60" min="0" max="1" step="0.01" style="width:64px">
+              <input id="ce_eff_mean" type="number" value="0.30" min="0" max="1" step="0.01" style="width:64px">
               <span style="font-size:11px">Median</span></label>
             <label style="display:flex;flex-direction:column;gap:3px;color:var(--mut);align-items:flex-start">
               <input id="ce_eff_sd" type="number" value="0.15" min="0" max="0.5" step="0.01" style="width:64px">
@@ -154,36 +160,10 @@
       <div class="cards" id="ceCardsSev" style="margin:0 0 4px"></div>
     </div>
 
-    <h2 class="sec-h">Cost-effectiveness of ClusterInfo
-      <span class="info" data-tip="Cost-effectiveness of ClusterInfo.org specifically (one of our projects), with 'patients helped' and 'effect size' built bottom-up from its own metrics instead of typed in. Each factor is a median with a std dev; the model Monte-Carlo-samples them and the cards show median with a p10–p90 band. patients helped = annual unique visitors × patient share × engagement × adoption × counterfactual share.">ⓘ</span>
-      <span id="ciStatus" style="font-size:11px;font-weight:400;color:var(--mut);margin-left:6px"></span></h2>
-    <div class="chart full" id="ciPanel" style="min-height:0;padding:12px 14px">
-      <div style="font-size:11px;color:var(--mut);margin-bottom:10px">Reach &amp; effect estimated bottom-up from ClusterInfo's PostHog analytics and on-site survey.</div>
-      <div style="display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;font-size:12px">
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <span>Annual ClusterInfo budget ($) <span class="info" data-tip="Annual budget for the ClusterInfo project specifically (a subset of the total ClusterFree budget above).">ⓘ</span></span>
-          <input id="ci_budget" type="text" inputmode="numeric" value="100,000" style="width:130px">
-        </div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <span>Annual unique visitors <span class="info" data-tip="Annualized unique visitors from PostHog, NOT the cumulative count to date.">ⓘ</span></span>
-          <input id="fun_visitors" type="text" inputmode="numeric" value="20,000" style="width:120px">
-        </div>
-      </div>
-      <div id="funnelInputs" style="display:flex;gap:22px 26px;flex-wrap:wrap;margin-top:12px;font-size:12px"></div>
-      <div id="funnelImplied" style="margin-top:12px;font-size:12px;color:var(--mut)"></div>
-      <div class="cards" id="ciCards" style="margin:12px 0 8px"></div>
-      <div class="cards" id="ciCardsSev" style="margin:0 0 4px"></div>
-    </div>
-
-    <h2 class="sec-h">Sensitivity of cost-effectiveness
-      <span class="info" data-tip="Tornado for a $/X-averted metric of the selected project. Each model lever is swept across its literature-plausible range; for ClusterFree the effect-size median is also swept (0.4–0.8), for ClusterInfo the five funnel-factor medians are swept across their own p10–p90. Budget and the reach inputs (patients-helped / visitors) are held fixed at that project's values above. Prevalence and the two access levers drop out entirely: cost-effectiveness depends on the per-patient benefit and how many we help, not on the size of the sufferer pool or on current access levels.">ⓘ</span></h2>
+    <h2 class="sec-h">Sensitivity of cost-effectiveness <span style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--acco);border:1px solid var(--acco);border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:middle">Illustrative</span>
+      <span class="info" data-tip="Tornado for a $/X-averted metric of the illustrative ClusterFree estimate above. Each model lever is swept across its literature-plausible range, and the effect-size median is also swept (0.4–0.8). Budget and patients helped are held fixed at the values above. Prevalence and the two access levers drop out entirely: cost-effectiveness depends on the per-patient benefit and how many we help, not on the size of the sufferer pool or on current access levels.">ⓘ</span></h2>
     <div class="chart full" style="min-height:0">
       <div class="sens-bar">
-        <span class="sgrp"><strong style="font-size:12px">Project:</strong>
-        <select id="sensCESource">
-          <option value="clusterfree" selected>ClusterFree</option>
-          <option value="clusterinfo">ClusterInfo only</option>
-        </select></span>
         <span class="sgrp"><strong style="font-size:12px">Metric:</strong>
         <select id="sensCEMetric">
           <option value="cost_per_dles" selected>$ / DLES averted</option>
@@ -193,7 +173,7 @@
         </select></span>
         <button id="sensCEBtn">Run sensitivity ▶</button>
         <span id="sensCEStatus" class="status"></span>
-        <span style="font-size:11px;color:var(--mut)">Each lever swept across its plausible range; budget &amp; reach held at the selected project's values above.</span>
+        <span style="font-size:11px;color:var(--mut)">Each lever swept across its plausible range; budget &amp; patients helped held at the values above.</span>
       </div>
       <div id="c_tornado_ce"></div>
     </div>
@@ -217,9 +197,6 @@ const LABELS = {
   e_bout_weeks_mean:"Bout length (weeks)", e_bouts_per_year_mean:"Bouts per year",
   annual_prevalence_per_100k:"Annual prevalence /100k", n_patients:"Simulated patients",
   effect_size_mean:"Effect size (median)",
-  patient_fraction:"P(patient | visitor)", engaged_fraction:"P(engaged | patient)",
-  adoption_fraction:"P(adopts | engaged)", counterfactual_share:"Counterfactual share",
-  clinical_capture:"Effect size (median)",
 };
 const TIPS = {
   annual_prevalence_per_100k:"How many adults out of every 100,000 have cluster headache in a given year. Default 53 comes from a large pooled study (Fischera 2007); across the world's ~5.8B adults that works out to ~3.07M sufferers in a year.",
@@ -236,11 +213,6 @@ const TIPS = {
   preventive_responder_reduction_sd:"How much the attack reduction varies from person to person among those the preventive helps.",
   preventive_peak_intensity_reduction:"How much a preventive lowers the worst (peak) pain of the attacks that still occur, among responders (the patients it helps). Preventive trials mainly document fewer attacks; any severity reduction of breakthrough attacks is weakly quantified, so this defaults low (0.1). Set 0 for frequency-only.",
   effect_size_mean:"ClusterFree effect size: of the full no-treatment → full-access benefit, the average share a helped patient actually realizes. Swept across 0.4–0.8 in this tornado (the median of the truncated-normal used elsewhere). A first-order linear driver of every $/X-averted figure.",
-  patient_fraction:"ClusterInfo funnel: share of visitors who are an actual CH patient (or caregiver acting for one). Swept across its own p10–p90. A multiplicative driver of patients-helped, so $/X scales inversely with it.",
-  engaged_fraction:"ClusterInfo funnel: share of patient-visitors who genuinely engage rather than bounce. Swept across its own p10–p90; $/X scales inversely with it.",
-  adoption_fraction:"ClusterInfo funnel: share of engaged patients who actually try/change a treatment — the least-observable, widest-spread factor. Swept across its own p10–p90; $/X scales inversely with it.",
-  counterfactual_share:"ClusterInfo funnel: of those who adopt, the share who would NOT have done so without us. Swept across its own p10–p90; $/X scales inversely with it.",
-  clinical_capture:"ClusterInfo effect size: of the full no-treatment → full-access benefit, the average share an adopter realizes. Swept across its own p10–p90; $/X scales inversely with it.",
   intensity_mean:"Average worst-pain rating of an attack on a 1–10 scale. Diary studies where patients rate attacks as they happen give ~7 (Snoer), not the commonly-cited '9.7/10' figure, which is people evaluating CH pain generally.",
   intensity_between_sd:"How much patients differ from one another in their typical attack pain. Set larger than the within-patient spread below, because studies suggest most variation is between people, not within one person (Snoer).",
   intensity_within_sd:"How much a single patient's own attacks vary in pain around their personal average. Kept small, since one person's attacks tend to be fairly similar to each other.",
@@ -374,50 +346,11 @@ async function init(){
   });
   setBell("bell_ce_eff","ce_eff_mean","ce_eff_sd");
   // live thousands-separators on the money/count text inputs
-  ["ce_budget","ce_reached","ci_budget","fun_visitors"].forEach(id=>{
+  ["ce_budget","ce_reached"].forEach(id=>{
     const el=$("#"+id); if(!el) return;
     el.addEventListener("input",()=>{ el.value=commafy(el.value);
       el.setSelectionRange(el.value.length, el.value.length); });
   });
-  // ---- Reach funnel: bottom-up patients_reached & effect_size_mean ----
-  // each factor is a truncated normal(median, sd) on [0,1]
-  const FUNNEL=[
-    {k:"patient_fraction",label:"P(patient | visitor)",mean:0.75,sd:0.10,
-     tip:"Share of visitors who are an actual CH patient, or a caregiver acting for one (not clinicians, researchers, curious/misdirected traffic). High here because traffic comes almost entirely from CH communities and targeted sharing."},
-    {k:"engaged_fraction",label:"P(engaged | patient)",mean:0.30,sd:0.10,
-     tip:"Share of patient-visitors who genuinely engage (read deeply rather than bounce)."},
-    {k:"adoption_fraction",label:"P(adopts treatment | engaged)",mean:0.25,sd:0.10,
-     tip:"Share of engaged patients who actually try/change a treatment. The least-observable factor and the one that dominates the uncertainty, so its spread is kept wide."},
-    {k:"counterfactual_share",label:"Counterfactual share",mean:0.50,sd:0.12,
-     tip:"Of the people who adopt a treatment, the share who would NOT have done so without us."},
-    {k:"clinical_capture",label:"Effect size",mean:0.50,sd:0.13,
-     tip:"Of the full benefit of going from no treatment to both an acute (attack-stopping) and a preventive (frequency-lowering) treatment, the average share an adopter actually realizes (most adopt one thing imperfectly). 1.0 does NOT mean pain-free."},
-  ];
-  {
-    const box=$("#funnelInputs");
-    FUNNEL.forEach(f=>{
-      const el=document.createElement("div");
-      el.style.cssText="display:flex;flex-direction:column;gap:6px;min-width:210px";
-      el.innerHTML=`<span>${f.label} <span class="info" data-tip="${f.tip.replace(/"/g,'&quot;')}">ⓘ</span></span>
-        <span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <label style="display:flex;flex-direction:column;gap:3px;color:var(--mut);align-items:flex-start">
-            <input id="fun_${f.k}_mean" type="number" value="${f.mean}" min="0" max="1" step="0.01" style="width:64px">
-            <span style="font-size:11px">Median</span></label>
-          <label style="display:flex;flex-direction:column;gap:3px;color:var(--mut);align-items:flex-start">
-            <input id="fun_${f.k}_sd" type="number" value="${f.sd}" min="0" max="0.5" step="0.005" style="width:64px">
-            <span style="font-size:11px">Std dev</span></label>
-          <span id="bell_fun_${f.k}"></span>
-        </span>`;
-      box.appendChild(el);
-    });
-    FUNNEL.forEach(f=> setBell(`bell_fun_${f.k}`,`fun_${f.k}_mean`,`fun_${f.k}_sd`));
-    ["ci_budget","fun_visitors",...FUNNEL.flatMap(f=>[`fun_${f.k}_mean`,`fun_${f.k}_sd`])]
-      .forEach(id=>$("#"+id).addEventListener("input",()=>{
-        const f=FUNNEL.find(x=>id===`fun_${x.k}_mean`||id===`fun_${x.k}_sd`);
-        if(f) setBell(`bell_fun_${f.k}`,`fun_${f.k}_mean`,`fun_${f.k}_sd`);
-        scheduleCI();
-      }));
-  }
   const actions=document.createElement("div"); actions.className="actions";
   const exp=document.createElement("button"); exp.textContent="⬇ Export simulated attacks (CSV)";
   exp.title="Everything the cost-effectiveness spreadsheet needs: per untreated patient, baseline + 'with access' attacks (abortive / preventive / both) with averted attacks/time/severe/DLES. Exports the full simulated cohort.";
@@ -432,21 +365,20 @@ async function init(){
 let timer=null;
 function schedule(){ clearTimeout(timer); timer=setTimeout(run,250); }
 // Debounce the cost-effectiveness recompute the same way as the sliders, so typing
-// in a text field (budget / reached / effect size / visitors / funnel factors) does
+// in a text field (budget / patients helped / effect size) does
 // not fire a recompute per keystroke. The per-patient sim is memoized backend-side
 // and these inputs don't change it, so each recompute is cheap once it does run.
-let cfTimer=null, ciTimer=null;
+let cfTimer=null;
 function scheduleCF(){ clearTimeout(cfTimer); cfTimer=setTimeout(runCF,200); }
-function scheduleCI(){ clearTimeout(ciTimer); ciTimer=setTimeout(runCI,200); }
 async function run(){
   $("#status").textContent="Running…";
   try{
     const r=await api("simulate", state);
-    draw(r); $("#status").textContent="Done."; runCF(); runCI();
+    draw(r); $("#status").textContent="Done."; runCF();
   }catch(e){ $("#status").textContent="Error: "+e.message; }
 }
 // shared card order: general -> specific (all attacks, then severe/extreme), each
-// quantity followed by its cost. Used by BOTH cost-effectiveness sections.
+// quantity followed by its cost. Used by the cost-effectiveness section.
 const CE_ROWS = [
   ["Attacks averted / yr", "attacks_averted", "n"],
   ["$ / attack averted", "cost_per_attack", "$"],
@@ -512,23 +444,6 @@ async function runCF(){
   renderCEcards("ceCards","ceCardsSev", r, true);
   $("#ceStatus").textContent="";
 }
-// ClusterInfo: bottom-up funnel, Monte-Carlo bands
-async function runCI(){
-  $("#ciStatus").textContent="…";
-  const p={...state, annual_budget:uncomma($("#ci_budget").value),
-           annual_unique_visitors:uncomma($("#fun_visitors").value)};
-  ["patient_fraction","engaged_fraction","adoption_fraction","counterfactual_share","clinical_capture"]
-    .forEach(k=>{ p[k+"_mean"]=$("#fun_"+k+"_mean").value; p[k+"_sd"]=$("#fun_"+k+"_sd").value; });
-  let r;
-  try{ r=await api("cost_effectiveness_funnel", p); }
-  catch(e){ $("#ciStatus").textContent="Error: "+e.message; return; }
-  renderCEcards("ciCards","ciCardsSev", r, true);
-  const pr=r.patients_reached;
-  const rnd=n=>Math.round(n).toLocaleString();
-  $("#funnelImplied").innerHTML=
-    `Implied <b>counterfactual patients helped/yr</b>: ${rnd(pr.p50)} <span style="opacity:.7">(p10–p90: ${rnd(pr.p10)}–${rnd(pr.p90)})</span>`;
-  $("#ciStatus").textContent="";
-}
 function draw(r){
   const s=r.summary;
   const cards=[
@@ -582,24 +497,14 @@ async function runSensitivity(){
 }
 async function runSensitivityCE(){
   const metric=$("#sensCEMetric").value;
-  const source=$("#sensCESource").value;
   const mode=await ensureMode();
   const n_sens = mode==="pyodide" ? 2000 : 4000;
   $("#sensCEStatus").textContent = "Running…";
   try{
-    let p;
-    if(source==="clusterinfo"){
-      p={...state, metric, n_sens, source,
-         annual_budget:uncomma($("#ci_budget").value),
-         annual_unique_visitors:uncomma($("#fun_visitors").value)};
-      ["patient_fraction","engaged_fraction","adoption_fraction","counterfactual_share","clinical_capture"]
-        .forEach(k=>{ p[k+"_mean"]=$("#fun_"+k+"_mean").value; p[k+"_sd"]=$("#fun_"+k+"_sd").value; });
-    } else {
-      p={...state, metric, n_sens, source,
-         annual_budget:uncomma($("#ce_budget").value),
-         patients_reached:uncomma($("#ce_reached").value),
-         effect_size_mean:$("#ce_eff_mean").value};
-    }
+    const p={...state, metric, n_sens,
+       annual_budget:uncomma($("#ce_budget").value),
+       patients_reached:uncomma($("#ce_reached").value),
+       effect_size_mean:$("#ce_eff_mean").value};
     const r=await api("sensitivity_ce", p);
     drawTornadoCE(r); $("#sensCEStatus").textContent="Done.";
   }catch(e){ $("#sensCEStatus").textContent="Error: "+e.message; }
@@ -708,9 +613,8 @@ function drawTornado(r){
     lessLabel:"raising lever → less burden"});
 }
 function drawTornadoCE(r){
-  const src=$("#sensCESource").selectedOptions[0].text;
   drawTornadoInto("c_tornado_ce", r, {
-    title:`Effect on: ${$("#sensCEMetric").selectedOptions[0].text} — ${src}`,
+    title:`Effect on: ${$("#sensCEMetric").selectedOptions[0].text}`,
     xtitle:"$ per unit averted across lever's range",
     moreLabel:"raising lever → higher $ (less cost-effective)",
     lessLabel:"raising lever → lower $ (more cost-effective)",
